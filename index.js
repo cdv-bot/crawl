@@ -1,10 +1,10 @@
 const request = require('request');
 const cheerio = require('cheerio');
 const fs = require('fs');
-request('https://www.bitis.com.vn/collections/nam', (error, request, html) => {
+request('https://www.bitis.com.vn/collections/hunter-nam', (error, request, html) => {
   if (!error && request.statusCode == 200) {
     const $ = cheerio.load(html);
-    const siteHeading = $('.product-lists-item');
+    const siteHeading = $('.product-wrapper');
     // const sitePrice = $('.product_prices');
     // const linkNext = $('.product-image');
 
@@ -14,7 +14,7 @@ request('https://www.bitis.com.vn/collections/nam', (error, request, html) => {
       // const item = $(el).attr("src").replace(/\/\//g, 'https://').replace(/_large/g, "");
       const title = $(el).find('.product-image').find('a').attr('title');
       const link = `https://www.bitis.com.vn${$(el).find('.product-image').find('a').attr('href')}`;
-      const img = `https:${$(el).find('.product-image').find('img').attr('src')}`;
+      const img = `https:${$(el).find('.product-image').find('img').attr('src').replace(/_large/g, '')}`;
       const price = $(el).find('.price').text();
 
       let obj = {
