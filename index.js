@@ -4,10 +4,10 @@ const cheerio = require("cheerio");
 const fs = require("fs");
 
 async function dequy(n, arrNext) {
-  if (n <= 10) {
+  if (n <= 1) {
     let arr = [];
     let $ = await rp({
-      uri: `https://www.bitis.com.vn/collections/be-gai?page=${n}`,
+      uri: `https://www.bitis.com.vn/collections/phu-kien`,
       transform: function (body) {
         return cheerio.load(body);
       },
@@ -38,7 +38,6 @@ async function dequy(n, arrNext) {
     arrNext.push(...arr);
     dequy(n + 1, arrNext);
   } else {
-    // console.log(arrNext);
     let arr = [...arrNext];
     for (i = 0; i < arr.length; i++) {
       let $ = await rp({
@@ -73,7 +72,7 @@ async function dequy(n, arrNext) {
         content: content,
       };
     }
-    fs.writeFileSync("data_productBeGai.json", JSON.stringify(arr));
+    fs.writeFileSync("data_productPhuKien.json", JSON.stringify(arr));
     return;
   }
 }
